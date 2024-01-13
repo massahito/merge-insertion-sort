@@ -1,0 +1,4 @@
+*.o
+pmerge
+a.out
+*.DSYM
