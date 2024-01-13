@@ -10,7 +10,7 @@ void	swapVectorByStep(std::vector<int> &vec, size_t index, size_t step) {
 		std::swap(vec[i], vec[i + step]);
 }
 
-void	SplitVectorIntoMainChainAndSubChain(std::vector<int> &vec, int step, std::vector<int> &main_chain, std::vector<int>& sub_chain) {
+void	SplitVectorIntoMainChainAndSubChain(std::vector<int> &vec, int step, std::vector<int> &main_chain, std::vector<int> &sub_chain) {
 
 	std::vector<int>	temp_chain = sub_chain;
 
@@ -39,23 +39,36 @@ size_t	binarySearchByStep(std::vector<int> &main_chain, int number, size_t end, 
 	size_t	left = 0;
 	size_t	right = end;
 
+	std::cout << "---BinarySearch---" << std::endl;
+	std::cout << "search number: " << number << " step: "  << step << " end: "  << end << std::endl;
+	if (number < main_chain[0])
+		return (0);
 	while (right - left > step) {
+		std::cout << "left: " << left << " " << " right: " << right << std::endl;
 		size_t mid = (right + left) / 2;
 		if (main_chain[mid] <= number)
 			left = mid;
 		else
 			right = mid;
+		std::cout << "cmp: " << main_chain[mid] << " " << "number: " << number<< std::endl;
 	}
-	return (left);
+	return (right);
 }
 
 void	InsertSubchainIntoMainchain(std::vector<int> &main_chain, std::vector<int> &sub_chain, size_t step) {
 	// TODO this order must be implemented by jacovsthal number's order
+	size_t	end = 0;
 	for (size_t i = 0; i < sub_chain.size(); i+=step)	{
 		// binary search
-		size_t index = binarySearchByStep(main_chain, sub_chain[i], i, step);
+		size_t index = binarySearchByStep(main_chain, sub_chain[i], end, step);
+		std::cout << "i: " << i << " number: " << sub_chain[i] << " index: " << index << std::endl;
 		 for (size_t j = 0; j < step; j++)
 		 		main_chain.insert(main_chain.begin() + index + j, sub_chain[i + j]);
+		 std::cout << "---main chain after insertion---" << std::endl;
+		 for (size_t j = 0; j < main_chain.size(); j++)
+			 std::cout << main_chain[j] << " ";
+		 std::cout << std::endl;
+		 end += (step * 2);
 	}
 }
 
