@@ -80,14 +80,14 @@ std::vector<int>	merge_insertion_sort(std::vector<int> &vec, size_t step) {
 	}
 
 	// print
-	std::cout << "---------finish----------" << std::endl;
-	std::cout << "step: " << step << std::endl;
-	std::cout << "---------print vec----------" << std::endl;
-	for (size_t i = 0; i < vec.size(); i++) std::cout << vec[i] << " ";
-	std::cout << std::endl;
-	std::cout << "---------print sub chain----------" << std::endl;
-	for (size_t i = 0; i < sub_chain.size(); i++) std::cout << sub_chain[i] << " ";
-	std::cout << std::endl;
+	//std::cout << "---------finish----------" << std::endl;
+	//std::cout << "step: " << step << std::endl;
+	//std::cout << "---------print vec----------" << std::endl;
+	//for (size_t i = 0; i < vec.size(); i++) std::cout << vec[i] << " ";
+	//std::cout << std::endl;
+	//std::cout << "---------print sub chain----------" << std::endl;
+	//for (size_t i = 0; i < sub_chain.size(); i++) std::cout << sub_chain[i] << " ";
+	//std::cout << std::endl;
 
 	// recursion 
 	vec = merge_insertion_sort(vec, step * 2);
