@@ -27,8 +27,11 @@ int main(int argc, char *argv[]) {
 	std::cout << "------original vector number------" << std::endl;
 	for (size_t i = 0; i < unsorted.size(); i++) std::cout << unsorted[i] << " ";
 	std::cout << std::endl;
-	
-	std::vector<int>	sorted = merge_insertion_sort(unsorted, 1);
+
+	// merge-insertion sort	
+	std::vector<int>	sorted = mergeInsertionSort(unsorted);
+
+	// print sorted vector values
 	std::cout << "------sorted vector number------" << std::endl;
 	for (size_t i = 0; i < sorted.size(); i++) std::cout << sorted[i] << " ";
 	std::cout << std::endl;

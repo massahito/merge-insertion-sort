@@ -1,16 +1,11 @@
 #include "merge-insertion-sort.hpp"
 
-/*
-	[3, 1, 11, 9, 2, 12, 0, 5, 8, 6, 4, 10, 7]	step=1
-	[[3, 1], [11, 9], [12, 2], [5, 0], [8, 6], [10, 4]]	step=2
-*/
-
 void	swapVectorByStep(std::vector<int> &vec, size_t index, size_t step) {
 	for (size_t i = index; i < index + step; i++)
 		std::swap(vec[i], vec[i + step]);
 }
 
-void	SplitVectorIntoMainChainAndSubChain(std::vector<int> &vec, int step, std::vector<int> &main_chain, std::vector<int> &sub_chain) {
+void	splitVectorIntoMainChainAndSubChain(std::vector<int> &vec, int step, std::vector<int> &main_chain, std::vector<int> &sub_chain) {
 
 	std::vector<int>	temp_chain = sub_chain;
 
@@ -51,34 +46,19 @@ size_t	binarySearchByStep(std::vector<int> &main_chain, int number, size_t end, 
 	return (right * step);
 }
 
-void	InsertSubchainIntoMainchain(std::vector<int> &main_chain, std::vector<int> &sub_chain, size_t step) {
+void	insertSubchainIntoMainchain(std::vector<int> &main_chain, std::vector<int> &sub_chain, size_t step) {
 	// TODO this order must be implemented by jacovsthal number's order
+	size_t	count = 0;
 	for (size_t i = 0; i < sub_chain.size(); i+=step)	{
 		// binary search
-		std::cout << i / step + 1 << std::endl;
-		size_t index = binarySearchByStep(main_chain, sub_chain[i], main_chain.size() / step, step);
+		size_t index = binarySearchByStep(main_chain, sub_chain[i], count, step);
 		 for (size_t j = 0; j < step; j++)
 		 		main_chain.insert(main_chain.begin() + index + j, sub_chain[i + j]);
-		 std::cout << "---main chain after insertion---" << std::endl;
-		 std::cout << "step: "  << step << std::endl;
-		 int		prev = -1;
-		 bool		is_bad= false;
-		 for (size_t j = 0; j < main_chain.size(); j++) {
-			 if (j % step == 0) {
-				if (main_chain[j] < prev) 
-					is_bad = true;		
-				prev = main_chain[j];
-			}
-			 std::cout << main_chain[j] << " ";
-		 }
-		 std::cout << std::endl;
-		
-		 if (is_bad)
-			 throw std::exception();
+		 count += 2;
 	}
 }
 
-std::vector<int>	merge_insertion_sort(std::vector<int> &vec, size_t step) {
+std::vector<int>	mergeInsertionSort(std::vector<int> &vec, size_t step) {
 
 	std::vector<int>	main_chain, sub_chain;
 	size_t				i = 0;
@@ -99,13 +79,13 @@ std::vector<int>	merge_insertion_sort(std::vector<int> &vec, size_t step) {
 	}
 
 	// recursion 
-	vec = merge_insertion_sort(vec, step * 2);
+	vec = mergeInsertionSort(vec, step * 2);
 
 	// separate vector to main_chain, sub_chain:
-	SplitVectorIntoMainChainAndSubChain(vec, step, main_chain, sub_chain);
+	splitVectorIntoMainChainAndSubChain(vec, step, main_chain, sub_chain);
 	
 	// insert sub_chain to main_chain
-	InsertSubchainIntoMainchain(main_chain, sub_chain, step);
+	insertSubchainIntoMainchain(main_chain, sub_chain, step);
 
 	// return main_chain
 	return (main_chain);
