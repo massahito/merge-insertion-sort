@@ -39,36 +39,42 @@ size_t	binarySearchByStep(std::vector<int> &main_chain, int number, size_t end, 
 	size_t	left = 0;
 	size_t	right = end;
 
-	std::cout << "---BinarySearch---" << std::endl;
-	std::cout << "search number: " << number << " step: "  << step << " end: "  << end << std::endl;
 	if (number < main_chain[0])
 		return (0);
-	while (right - left > step) {
-		std::cout << "left: " << left << " " << " right: " << right << std::endl;
+	while (right - left > 1) {
 		size_t mid = (right + left) / 2;
-		if (main_chain[mid] <= number)
+		if (main_chain[mid * step] < number)
 			left = mid;
 		else
 			right = mid;
-		std::cout << "cmp: " << main_chain[mid] << " " << "number: " << number<< std::endl;
 	}
-	return (right);
+	return (right * step);
 }
 
 void	InsertSubchainIntoMainchain(std::vector<int> &main_chain, std::vector<int> &sub_chain, size_t step) {
 	// TODO this order must be implemented by jacovsthal number's order
-	size_t	end = 0;
 	for (size_t i = 0; i < sub_chain.size(); i+=step)	{
 		// binary search
-		size_t index = binarySearchByStep(main_chain, sub_chain[i], end, step);
-		std::cout << "i: " << i << " number: " << sub_chain[i] << " index: " << index << std::endl;
+		std::cout << i / step + 1 << std::endl;
+		size_t index = binarySearchByStep(main_chain, sub_chain[i], main_chain.size() / step, step);
 		 for (size_t j = 0; j < step; j++)
 		 		main_chain.insert(main_chain.begin() + index + j, sub_chain[i + j]);
 		 std::cout << "---main chain after insertion---" << std::endl;
-		 for (size_t j = 0; j < main_chain.size(); j++)
+		 std::cout << "step: "  << step << std::endl;
+		 int		prev = -1;
+		 bool		is_bad= false;
+		 for (size_t j = 0; j < main_chain.size(); j++) {
+			 if (j % step == 0) {
+				if (main_chain[j] < prev) 
+					is_bad = true;		
+				prev = main_chain[j];
+			}
 			 std::cout << main_chain[j] << " ";
+		 }
 		 std::cout << std::endl;
-		 end += (step * 2);
+		
+		 if (is_bad)
+			 throw std::exception();
 	}
 }
 
@@ -91,16 +97,6 @@ std::vector<int>	merge_insertion_sort(std::vector<int> &vec, size_t step) {
 		sub_chain = std::vector<int>(vec.begin() + i, vec.end());
 		vec.resize((vec.size() / pair_size) * pair_size);
 	}
-
-	// print
-	//std::cout << "---------finish----------" << std::endl;
-	//std::cout << "step: " << step << std::endl;
-	//std::cout << "---------print vec----------" << std::endl;
-	//for (size_t i = 0; i < vec.size(); i++) std::cout << vec[i] << " ";
-	//std::cout << std::endl;
-	//std::cout << "---------print sub chain----------" << std::endl;
-	//for (size_t i = 0; i < sub_chain.size(); i++) std::cout << sub_chain[i] << " ";
-	//std::cout << std::endl;
 
 	// recursion 
 	vec = merge_insertion_sort(vec, step * 2);
