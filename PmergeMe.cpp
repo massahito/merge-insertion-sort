@@ -43,15 +43,23 @@ size_t	PmergeMe::binarySearchByStep(std::vector<int> &main_chain, int number, si
 
 
 void	PmergeMe::insertSubchainIntoMainchain(std::vector<int> &main_chain, std::vector<int> &sub_chain, size_t step) {
-	// TODO this order must be implemented by jacovsthal number's order
 	size_t	count = 0;
+	size_t	jacob = 0;
 
-	for (size_t i = 0; i < sub_chain.size(); i+=step)	{
-		// binary search
-		size_t index = binarySearchByStep(main_chain, sub_chain[i], count, step);
-		 for (size_t j = 0; j < step; j++)
-		 		main_chain.insert(main_chain.begin() + index + j, sub_chain[i + j]);
-		 count += 2;
+	while (getJacobsthalNumber(jacob) < sub_chain.size() / step)
+		jacob++;
+	for (size_t k = 0; k < step; k++)
+		main_chain.insert(main_chain.begin() + k, sub_chain[k]);
+
+	for (size_t i = 2; i <= jacob; i++)	{
+		for (size_t j = getJacobsthalNumber(i); getJacobsthalNumber(i - 1) < j; j--) {
+			if ((j - 1) * step < sub_chain.size()) {
+				size_t index = binarySearchByStep(main_chain, sub_chain[(j - 1) * step], j + count, step);
+			 	for (size_t k = 0; k < step; k++)
+			 		main_chain.insert(main_chain.begin() + index + k, sub_chain[(j - 1) * step + k]);
+			 	count++;
+			}
+		}
 	}
 }
 
@@ -148,12 +156,21 @@ size_t	PmergeMe::binarySearchByStep(std::list<int> &main_chain, int number, size
 void	PmergeMe::insertSubchainIntoMainchain(std::list<int> &main_chain, std::list<int> &sub_chain, size_t step) {
 	// TODO this order must be implemented by jacovsthal number's order
 	size_t	count = 0;
-	for (size_t i = 0; i < sub_chain.size(); i+=step)	{
-		// binary search
-		size_t index = binarySearchByStep(main_chain, getIndexListNumber(sub_chain, i), count, step);
-		 for (size_t j = 0; j < step; j++)
-		 		main_chain.insert(getIndexListIterator(main_chain, index + j), getIndexListNumber(sub_chain, i + j));
-		 count += 2;
+	size_t	jacob = 0;
+	while (getJacobsthalNumber(jacob) < sub_chain.size() / step)
+		jacob++;
+	for (size_t k = 0; k < step; k++)
+		main_chain.insert(getIndexListIterator(main_chain, + k), getIndexListNumber(sub_chain, k));
+
+	for (size_t i = 2; i <= jacob; i++)	{
+		for (size_t j = getJacobsthalNumber(i); getJacobsthalNumber(i - 1) < j; j--) {
+			if ((j - 1) * step < sub_chain.size()) {
+				size_t index = binarySearchByStep(main_chain, getIndexListNumber(sub_chain, (j - 1) * step), j + count, step);
+			 	for (size_t k = 0; k < step; k++)
+			 		main_chain.insert(getIndexListIterator(main_chain,  index + k), getIndexListNumber(sub_chain, (j - 1) * step + k));
+			 	count++;
+			}
+		}
 	}
 }
 

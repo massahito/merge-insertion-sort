@@ -13,7 +13,7 @@ class	PmergeMe {
 		PmergeMe(PmergeMe const &p_merge_me);
 		~PmergeMe();
 		PmergeMe	&operator=(PmergeMe const &p_merge_me);
-		size_t							getJacobsthalNumber(size_t n);
+		static	size_t					getJacobsthalNumber(size_t n);
 		// #vector
 		static void						swapVectorByStep(std::vector<int> &vec, size_t index, size_t step);
 		static void						splitVectorIntoMainChainAndSubChain(std::vector<int> &vec, int step, std::vector<int> &main_chain, std::vector<int> &sub_chain);
