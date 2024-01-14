@@ -1,5 +1,6 @@
-#include "merge-insertion-sort.hpp"
+#include "merge-insertion-sort-vector.hpp"
 
+// swap function
 void	swapVectorByStep(std::vector<int> &vec, size_t index, size_t step) {
 	for (size_t i = index; i < index + step; i++)
 		std::swap(vec[i], vec[i + step]);
@@ -9,7 +10,7 @@ void	splitVectorIntoMainChainAndSubChain(std::vector<int> &vec, int step, std::v
 
 	std::vector<int>	temp_chain = sub_chain;
 
-	sub_chain.resize(0);
+	sub_chain.clear();
 	for (size_t i = 0; i < vec.size(); i++) {
 		if ((i / step) % 2 == 0)
 			main_chain.push_back(vec[i]);

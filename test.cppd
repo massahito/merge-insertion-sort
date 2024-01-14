@@ -1,0 +1,20 @@
+#include <iostream>
+#include <list>
+
+int main() {
+	std::list<int>	lst;
+
+	for (size_t i = 0; i < 10; i++)
+		lst.push_back(i);
+	lst.resize(5);
+	for (std::list<int>::iterator iter = lst.begin(); iter != lst.end(); iter++)
+		std::cout << *iter << " ";
+	std::cout << std::endl;
+
+	std::list<int> lst2;
+	lst2 = std::list<int>(lst.begin(), lst.end());
+	for (std::list<int>::iterator iter = lst2.begin(); iter != lst2.end(); iter++)
+		std::cout << *iter << " ";
+	std::cout << std::endl;
+}
+	
