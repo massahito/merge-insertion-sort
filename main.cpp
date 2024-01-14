@@ -1,9 +1,7 @@
-#include "merge-insertion-sort-vector.hpp"
-#include "merge-insertion-sort-list.hpp"
-
+#include "PmergeMe.hpp"
 #include <iostream>
-#include <vector>
 #include <random>
+#include <algorithm>
 
 
 int main(int argc, char *argv[]) {
@@ -31,7 +29,7 @@ int main(int argc, char *argv[]) {
 		std::cout << std::endl;
 
 		// merge-insertion sort	
-		std::vector<int>	sorted = mergeInsertionSort(unsorted);
+		std::vector<int>	sorted = PmergeMe::mergeInsertionSort(unsorted);
 
 		// print sorted vector values
 		std::cout << "------sorted vector number------" << std::endl;
@@ -51,7 +49,7 @@ int main(int argc, char *argv[]) {
 		std::cout << std::endl;
 
 		// merge-insertion sort	
-		std::list<int>	sorted = mergeInsertionSort(unsorted);
+		std::list<int>	sorted = PmergeMe::mergeInsertionSort(unsorted);
 
 		// print sorted vector values
 		std::cout << "------sorted list number------" << std::endl;
